@@ -21,7 +21,8 @@ $ GetTagContent.py example.txt
 You can see the result of script in the file which has the name ``_result`` after the name of the input file.
 If your input file name is ``example.txt``, the result file name is ``example_result.txt``.
 
-```example_result.txt
+```
+[example_result.txt]
 /path/to/the/file/file_name (10): the content of the file
 /path/to/the/file/file_name (1234): the content of line 1234
 ```
