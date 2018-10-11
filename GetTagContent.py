@@ -15,18 +15,21 @@ def main():
         input_file_name = sys.argv[1]
 
     # create output file
-    output_file_name = re.sub(r'(\.[^\.]+$', r'_result\1', input_file_name)    # insert '_result' before the last period
+    output_file_name = re.sub(r'(\.[^\.]+)$', r'_result\1', input_file_name)    # insert '_result' before the last period
     output_file = open(output_file_name, 'w')
     output_file.close()
     output_file = open(output_file_name, 'a')
 
     # read input file and write into output file
-    print('Writing into ' + outpu_file_name)
+    print('Writing into ' + output_file_name)
     fp = open(input_file_name)
     for line in fp:
-        tag_file_name, line_num, dummy = re.split('[\(\)]', line)
-        content = get_tag_content(tag_file_name, line_num)
-        output_file.write(line.rstrip('\n') + ':' + content)
+        tag_file_name, line_num = get_jump_point(line)
+        if tag_file_name is not None:
+            content = get_tag_content(tag_file_name, line_num)
+            output_file.write(line.rstrip('\n') + ':' + content)
+        else:
+            output_file.write(line)
 
     print('Complete!')
     print('Cleaning...')
@@ -38,7 +41,7 @@ def main():
 # *******************************
 # * Internal Functions
 # *******************************
-def get_tab_content(file_name, linu_num):
+def get_tag_content(file_name, linu_num):
     ret = ''
     fp = open(file_name)
     for idx, line in enumerate(fp):
@@ -49,6 +52,21 @@ def get_tab_content(file_name, linu_num):
     fp.close()
     return ret
 
-if __nam__='__main__':
+def get_jump_point(line):
+    """The function gets file name and line number
+    to jump to obtain content.
+    """
+    tag_file_name = None
+    line_num = None
+
+    result = re.split('[\(\)]', line)
+
+    if len(result) >= 2:
+        tag_file_name = result[0]
+        line_num = result[1]
+
+    return (tag_file_name, line_num)
+
+if __name__=='__main__':
     main()
 
