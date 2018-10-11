@@ -14,7 +14,13 @@ You can give the script a argument to input file.
 Or no argument, the script want you to input file.
 
 ```
-$ GetTagContent.py example.txt
+[example.txt]
+/path/to/the/file/file_name (10)
+/path/to/the/file/file_name (1234)
+```
+
+```
+$ python GetTagContent.py example.txt
 ```
 
 ## Result
