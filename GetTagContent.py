@@ -2,6 +2,7 @@
 
 import sys
 import re
+import os
 
 # *******************************
 # * Main
@@ -41,9 +42,9 @@ def main():
 # *******************************
 # * Internal Functions
 # *******************************
-def get_tag_content(file_name, linu_num):
+def get_tag_content(file_name, line_num):
     ret = ''
-    fp = open(file_name)
+    fp = open(os.path.abspath(file_name))
     for idx, line in enumerate(fp):
         if (idx + 1) == int(line_num):
             ret = line
@@ -62,7 +63,7 @@ def get_jump_point(line):
     result = re.split('[\(\)]', line)
 
     if len(result) >= 2:
-        tag_file_name = result[0]
+        tag_file_name = result[0].rstrip()
         line_num = result[1]
 
     return (tag_file_name, line_num)
